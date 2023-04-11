@@ -35,7 +35,7 @@ function Blog() {
         <h1 className="mb-4 text-4xl font-bold leading-none tracking-tight text-gray-900">Welcome to my blog!</h1>
         <ul className="flex flex-col space-y-5">
           {myPosts.map((post) => (
-            <div className="">
+            <div key={post.id}>
               <div className="flex justify-between content-center border-b border-gray-300 mb-1">
                 <h1 className="text-lg font-semibold leading-none tracking-tight text-gray-900">{post.title}</h1>
                 <p className="text-sm">by: {post.author}</p>
