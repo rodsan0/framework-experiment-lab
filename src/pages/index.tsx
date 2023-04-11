@@ -38,7 +38,7 @@ function Blog() {
     let { data: posts } = await supabase
       .from('posts')
       .select('*')
-      .order('id',  { ascending: true })
+      .order('id',  { ascending: false })
     setMyPosts(posts);
   }
   getBooks();
