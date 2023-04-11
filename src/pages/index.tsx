@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js"
-import { Database } from './supabase'
+import { Database } from '../supabase'
 import { useState } from 'react';
 
 const supabaseUrl = 'https://dpjxeujgrsnsqygvxwag.supabase.co'
