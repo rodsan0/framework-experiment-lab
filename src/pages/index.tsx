@@ -1,6 +1,8 @@
 import { createClient } from "@supabase/supabase-js"
 import { Database } from '../supabase'
 import { useState } from 'react';
+import { remark } from 'remark';
+import html from 'remark-html';
 
 const supabaseUrl = 'https://dpjxeujgrsnsqygvxwag.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwanhldWpncnNuc3F5Z3Z4d2FnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODExODE5NjgsImV4cCI6MTk5Njc1Nzk2OH0.XDGbcz5_XcABlLVtVlH2TLrOwgEtn2iBkoKZ5-qhv3U'
@@ -13,6 +15,22 @@ type Post = {
   created_at: string | null
   id: number
   title: string | null
+}
+
+function MarkdownRender({ body_text }: { body_text: string | null }) {
+  if (!body_text) return (<p>Loading.</p>);
+  const [myBody, setBody] = useState<string>('');
+  async function formatBody() {
+    let processed_body = await remark()
+      .use(html)
+      .process(body_text || "");
+      const contentHTML = processed_body.toString();
+      setBody(contentHTML);
+  }
+  formatBody();
+  return (
+    <div dangerouslySetInnerHTML={{ __html: myBody }}></div>
+  );
 }
 
 function Blog() {
@@ -31,18 +49,20 @@ function Blog() {
   }
 
   return (
-    <main className="flex flex-col items-center p-24 space-y-10">
-      <div className="max-w-screen-sm content-center">
-      <h1 className="mb-4 text-4xl font-bold leading-none tracking-tight text-gray-900">Welcome to my blog!</h1>
-        <ul className="flex flex-col space-y-5">
+    <main className="flex flex-col items-center p-24 space-y-10 h-full">
+      <div className="max-w-screen-lg content-center">
+        <h1 className="text-8xl font-bold leading-none tracking-tight text-[#0c7fd8] mb-10">Welcome to my blog!</h1>
+        <ul className="flex flex-col space-y-5 h-full justify-around ">
           {myPosts.map((post) => (
-            <div key={post.id}>
-              <div className="flex justify-between content-center border-b border-gray-300 mb-3">
-                <h1 className="text-xl font-light leading-none tracking-tight text-gray-900">{post.title}</h1>
-                <p className="font-light">by: {post.author}</p>
+            <article key={post.id} className="prose prose-2xl prose-slate border-b border-gray-500">
+              <div className="flex justify-between items-baseline font-light mt-5">
+                <h1 className="text-6xl font-light mb-0">{post.title}</h1>
+                <p className="text-3xl font-light tracking-tight mb-0">by: {post.author}</p>
               </div>
-              <p className="space-y-0">{post.body}</p>
-            </div>
+              <div>
+                <MarkdownRender body_text={post.body}></MarkdownRender>
+              </div>
+            </article>
           ))}
         </ul>
       </div>
