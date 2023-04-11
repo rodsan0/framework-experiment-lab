@@ -48,15 +48,15 @@ function Blog() {
   }
 
   return (
-    <main className="flex flex-col items-center p-24 space-y-10 h-full">
-      <div className="max-w-screen-lg content-center">
-        <h1 className="text-8xl font-bold leading-none tracking-tight text-[#0c7fd8] mb-10">Welcome to my blog!</h1>
-        <ul className="flex flex-col space-y-5 h-full justify-around ">
+    <main className="flex flex-col items-center p-24 space-y-10 h-full bg-gradient-to-b from-slate-100">
+      <div className="max-w-screen-lg content-stretch w-screen mx-7">
+        <h1 className="text-5xl lg:text-8xl font-bold leading-none tracking-tight text-[#0c7fd8] mb-10 mx-7">Welcome to my blog!</h1>
+        <ul className="flex flex-col space-y-5 h-full justify-around mx-7">
           {myPosts.map((post) => (
-            <article key={post.id} className="prose prose-2xl prose-slate dark:prose-invert border-b border-gray-500">
+            <article key={post.id} className="prose prose-2xl prose-slate dark:prose-invert border-b border-blue-500">
               <div className="flex justify-between items-baseline font-light mt-5">
-                <h1 className="text-6xl font-light mb-0">{post.title}</h1>
-                <p className="text-3xl font-light tracking-tight mb-0">by: {post.author}</p>
+                <h1 className="text-5xl lg:text-6xl font-light mb-0">{post.title}</h1>
+                <p className="text-2xl lg:text-3xl font-light tracking-tight mb-0">by {post.author}</p>
               </div>
               <div>
                 <MarkdownRender body_text={post.body}></MarkdownRender>
