@@ -18,7 +18,6 @@ type Post = {
 }
 
 function MarkdownRender({ body_text }: { body_text: string | null }) {
-  if (!body_text) return (<p>Loading.</p>);
   const [myBody, setBody] = useState<string>('');
   async function formatBody() {
     let processed_body = await remark()
